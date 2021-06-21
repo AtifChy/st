@@ -1,7 +1,7 @@
 From dace990064fb3f58eb4d3646a32ecb0f9257a204 Mon Sep 17 00:00:00 2001
 From: AtifChy <iftakhar.awal@yahoo.com>
 Date: Mon, 21 Jun 2021 23:35:07 +0600
-Subject: [PATCH 12/14] blinking-cursor
+Subject: [PATCH 12/13] blinking-cursor
 
 ---
  config.def.h | 19 +++++++++++++------
@@ -14,7 +14,7 @@ index 2ed367a..d9e5af7 100644
 +++ b/config.def.h
 @@ -153,13 +153,20 @@ static unsigned int defaultcs = 258;
  static unsigned int defaultrcs = 259;
- 
+
  /*
 - * Default shape of cursor
 - * 2: Block ("█")
@@ -36,7 +36,7 @@ index 2ed367a..d9e5af7 100644
 -static unsigned int cursorshape = 2;
 +static unsigned int cursorstyle = 1;
 +static Rune stcursor = 0x2603; /* snowman (U+2603) */
- 
+
  /*
   * Default columns and rows numbers
 diff --git a/x.c b/x.c
@@ -45,10 +45,10 @@ index 832b3a5..257ca53 100644
 +++ b/x.c
 @@ -262,6 +262,7 @@ static char *opt_name  = NULL;
  static char *opt_title = NULL;
- 
+
  static int oldbutton = 3; /* button event on startup: 3 = release */
 +static int cursorblinks = 0;
- 
+
  TermWindow
  gettermwindow()
 @@ -1672,16 +1673,19 @@ xdrawcursor(int cx, int cy, Glyph g, int ox, int oy, Glyph og, Line line, int le
@@ -115,7 +115,7 @@ index 832b3a5..257ca53 100644
 +	               win.cursor == 7;
  	return 0;
  }
- 
+
 @@ -2245,6 +2263,10 @@ run(void)
  		if (FD_ISSET(ttyfd, &rfd) || xev) {
  			if (!drawing) {
@@ -128,7 +128,7 @@ index 832b3a5..257ca53 100644
  			}
  			timeout = (maxlatency - TIMEDIFF(now, trigger)) \
 @@ -2255,7 +2277,7 @@ run(void)
- 
+
  		/* idle detected or maxlatency exhausted -> draw */
  		timeout = -1;
 -		if (blinktimeout && tattrset(ATTR_BLINK)) {
@@ -142,9 +142,9 @@ index 832b3a5..257ca53 100644
  	xw.isfixed = False;
 -	xsetcursor(cursorshape);
 +	xsetcursor(cursorstyle);
- 
+
  	ARGBEGIN {
  	case 'a':
--- 
+--
 2.32.0
 

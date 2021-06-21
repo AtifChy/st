@@ -1,7 +1,7 @@
 From 9263f1196c0dadd5dcc371f3a9291c794414b468 Mon Sep 17 00:00:00 2001
 From: AtifChy <iftakhar.awal@yahoo.com>
 Date: Mon, 21 Jun 2021 23:40:08 +0600
-Subject: [PATCH 13/14] url-copy-open
+Subject: [PATCH 13/13] url-copy-open
 
 ---
  config.def.h |   2 +
@@ -33,9 +33,9 @@ index d64659b..aad67ed 100644
  static void tstrsequence(uchar);
 +static void tsetcolor(int, int, int, uint32_t, uint32_t);
 +static char * findlastany(char *, const char**, size_t);
- 
+
  static void drawregion(int, int, int, int);
- 
+
 @@ -2752,3 +2754,122 @@ redraw(void)
  	tfulldirt();
  	draw();
@@ -169,7 +169,7 @@ index 0544263..1f2d5ac 100644
  void toggleprinter(const Arg *);
 +void copyurl(const Arg *);
 +void opencopied(const Arg *);
- 
+
  int tattrset(int);
  int tisaltscr(void);
 diff --git a/x.c b/x.c
@@ -177,7 +177,7 @@ index 257ca53..dd0e6d3 100644
 --- a/x.c
 +++ b/x.c
 @@ -2459,3 +2459,26 @@ run:
- 
+
  	return 0;
  }
 +
@@ -203,6 +203,6 @@ index 257ca53..dd0e6d3 100644
 +
 +	system(cmd);
 +}
--- 
+--
 2.32.0
 

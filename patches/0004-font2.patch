@@ -1,7 +1,7 @@
 From 3ed2c4fa9a6df8ccb1b1a6b1460e94d8117da499 Mon Sep 17 00:00:00 2001
 From: AtifChy <iftakhar.awal@yahoo.com>
 Date: Mon, 21 Jun 2021 23:10:00 +0600
-Subject: [PATCH 04/14] font2
+Subject: [PATCH 04/13] font2
 
 ---
  config.def.h |   6 +++
@@ -23,7 +23,7 @@ index 6533be0..87fa43c 100644
 +};
 +
  static int borderpx = 2;
- 
+
  /*
 diff --git a/x.c b/x.c
 index 91430ae..3545cfb 100644
@@ -49,13 +49,13 @@ index 91430ae..3545cfb 100644
 @@ -1017,6 +1020,101 @@ xloadfonts(char *fontstr, double fontsize)
  	FcPatternDestroy(pattern);
  }
- 
+
 +int
 +xloadsparefont(FcPattern *pattern, int flags)
 +{
 +	FcPattern *match;
 +	FcResult result;
-+	
++
 +	match = FcFontMatch(NULL, pattern, &result);
 +	if (!match) {
 +		return 1;
@@ -97,50 +97,50 @@ index 91430ae..3545cfb 100644
 +	}
 +
 +	for (fp = font2; fp - font2 < fc; ++fp) {
-+	
++
 +		if (**fp == '-')
 +			pattern = XftXlfdParse(*fp, False, False);
 +		else
 +			pattern = FcNameParse((FcChar8 *)*fp);
-+	
++
 +		if (!pattern)
 +			die("can't open spare font %s\n", *fp);
-+	   		
++
 +		if (defaultfontsize > 0) {
 +			sizeshift = usedfontsize - defaultfontsize;
 +			if (sizeshift != 0 &&
 +					FcPatternGetDouble(pattern, FC_PIXEL_SIZE, 0, &fontval) ==
-+					FcResultMatch) {	
++					FcResultMatch) {
 +				fontval += sizeshift;
 +				FcPatternDel(pattern, FC_PIXEL_SIZE);
 +				FcPatternDel(pattern, FC_SIZE);
 +				FcPatternAddDouble(pattern, FC_PIXEL_SIZE, fontval);
 +			}
 +		}
-+	
++
 +		FcPatternAddBool(pattern, FC_SCALABLE, 1);
-+	
++
 +		FcConfigSubstitute(NULL, pattern, FcMatchPattern);
 +		XftDefaultSubstitute(xw.dpy, xw.scr, pattern);
-+	
++
 +		if (xloadsparefont(pattern, FRC_NORMAL))
 +			die("can't open spare font %s\n", *fp);
-+	
++
 +		FcPatternDel(pattern, FC_SLANT);
 +		FcPatternAddInteger(pattern, FC_SLANT, FC_SLANT_ITALIC);
 +		if (xloadsparefont(pattern, FRC_ITALIC))
 +			die("can't open spare font %s\n", *fp);
-+			
++
 +		FcPatternDel(pattern, FC_WEIGHT);
 +		FcPatternAddInteger(pattern, FC_WEIGHT, FC_WEIGHT_BOLD);
 +		if (xloadsparefont(pattern, FRC_ITALICBOLD))
 +			die("can't open spare font %s\n", *fp);
-+	
++
 +		FcPatternDel(pattern, FC_SLANT);
 +		FcPatternAddInteger(pattern, FC_SLANT, FC_SLANT_ROMAN);
 +		if (xloadsparefont(pattern, FRC_BOLD))
 +			die("can't open spare font %s\n", *fp);
-+	
++
 +		FcPatternDestroy(pattern);
 +	}
 +}
@@ -151,13 +151,13 @@ index 91430ae..3545cfb 100644
 @@ -1117,6 +1215,9 @@ xinit(int cols, int rows)
  	usedfont = (opt_font == NULL)? font : opt_font;
  	xloadfonts(usedfont, 0);
- 
+
 +	/* spare fonts */
 +	xloadsparefonts();
 +
  	/* colors */
  	xw.cmap = XDefaultColormap(xw.dpy, xw.scr);
  	xloadcols();
--- 
+--
 2.32.0
 

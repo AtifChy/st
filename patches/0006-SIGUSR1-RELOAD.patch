@@ -1,0 +1,82 @@
+From 15b7875e01b74dc48da9d7e86054ef7b87a09a64 Mon Sep 17 00:00:00 2001
+From: AtifChy <iftakhar.awal@yahoo.com>
+Date: Mon, 21 Jun 2021 23:48:46 +0600
+Subject: [PATCH 06/13] SIGUSR1-RELOAD
+
+---
+ x.c | 31 ++++++++++++++++++++++++++++++-
+ 1 file changed, 30 insertions(+), 1 deletion(-)
+
+diff --git a/x.c b/x.c
+index 022eafb..e89d812 100644
+--- a/x.c
++++ b/x.c
+@@ -198,6 +198,8 @@ static int match(uint, uint);
+ static void run(void);
+ static void usage(void);
+
++static void config_init(void);
++
+ static void (*handler[LASTEvent])(XEvent *) = {
+ 	[KeyPress] = kpress,
+ 	[ClientMessage] = cmessage,
+@@ -2176,6 +2178,10 @@ cmessage(XEvent *e)
+ 	} else if (e->xclient.data.l[0] == xw.wmdeletewin) {
+ 		ttyhangup();
+ 		exit(0);
++	} else if (strcmp(XGetAtomName(xw.dpy, e->xclient.message_type), "ReloadColors") == 0) {
++		config_init();
++		xloadcols();
++		cresize(win.w, win.h);
+ 	}
+ }
+
+@@ -2339,7 +2345,7 @@ config_init(void)
+ 	ResourcePref *p;
+
+ 	XrmInitialize();
+-	resm = XResourceManagerString(xw.dpy);
++	resm = XResourceManagerString(XOpenDisplay(NULL));
+ 	if (!resm)
+ 		return;
+
+@@ -2361,6 +2367,28 @@ usage(void)
+ 	    " [stty_args ...]\n", argv0, argv0);
+ }
+
++void
++reload(int sig)
++{
++	config_init();
++
++	/* colors, fonts */
++	xloadcols();
++	xunloadfonts();
++	usedfont = (opt_font == NULL)? font : opt_font;
++	xloadfonts(usedfont, 0);
++
++	/* pretend the window just got resized */
++	cresize(win.w, win.h);
++
++	redraw();
++
++	/* triggers re-render if we're visible. */
++	ttywrite("\033[O", 3, 1);
++
++	signal(SIGUSR1, reload);
++}
++
+ int
+ main(int argc, char *argv[])
+ {
+@@ -2428,6 +2456,7 @@ run:
+ 	config_init();
+ 	cols = MAX(cols, 1);
+ 	rows = MAX(rows, 1);
++	signal(SIGUSR1, reload);
+ 	tnew(cols, rows);
+ 	xinit(cols, rows);
+ 	xsetenv();
+--
+2.32.0
+

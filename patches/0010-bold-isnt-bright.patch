@@ -1,7 +1,7 @@
 From 0380cdac8181c5a827ad81b3d1ab19d6aea7df4c Mon Sep 17 00:00:00 2001
 From: AtifChy <iftakhar.awal@yahoo.com>
 Date: Mon, 21 Jun 2021 23:32:51 +0600
-Subject: [PATCH 10/14] bold-isnt-bright
+Subject: [PATCH 10/13] bold-isnt-bright
 
 ---
  x.c | 4 ----
@@ -14,7 +14,7 @@ index 89acec5..1abcd57 100644
 @@ -1508,10 +1508,6 @@ xdrawglyphfontspecs(const XftGlyphFontSpec *specs, Glyph base, int len, int x, i
  		bg = &dc.col[base.bg];
  	}
- 
+
 -	/* Change basic system colors [0-7] to bright system colors [8-15] */
 -	if ((base.mode & ATTR_BOLD_FAINT) == ATTR_BOLD && BETWEEN(base.fg, 0, 7))
 -		fg = &dc.col[base.fg + 8];
@@ -22,6 +22,6 @@ index 89acec5..1abcd57 100644
  	if (IS_SET(MODE_REVERSE)) {
  		if (fg == &dc.col[defaultfg]) {
  			fg = &dc.col[defaultbg];
--- 
+--
 2.32.0
 

@@ -1,7 +1,7 @@
 From 06f31cdab76140278c2c9cf1370f2ecfb6d1d26c Mon Sep 17 00:00:00 2001
 From: AtifChy <iftakhar.awal@yahoo.com>
 Date: Mon, 21 Jun 2021 23:33:56 +0600
-Subject: [PATCH 11/14] dynamic-cursor-color
+Subject: [PATCH 11/13] dynamic-cursor-color
 
 ---
  x.c | 19 +++++++++++++++++--
@@ -16,7 +16,7 @@ index 1abcd57..832b3a5 100644
  {
  	Color drawcol;
 +	XRenderColor colbg;
- 
+
  	/* remove the old cursor */
  	if (selected(ox, oy))
 @@ -1648,10 +1649,24 @@ xdrawcursor(int cx, int cy, Glyph g, int ox, int oy, Glyph og, Line line, int le
@@ -44,8 +44,8 @@ index 1abcd57..832b3a5 100644
 +			drawcol = dc.col[g.bg];
 +		}
  	}
- 
+
  	/* draw the new one */
--- 
+--
 2.32.0
 

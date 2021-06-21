@@ -1,7 +1,7 @@
 From 23614054e68c618bad2d542a64c33e4534072947 Mon Sep 17 00:00:00 2001
 From: AtifChy <iftakhar.awal@yahoo.com>
 Date: Mon, 21 Jun 2021 23:18:59 +0600
-Subject: [PATCH 08/14] desktop-entry
+Subject: [PATCH 08/13] desktop-entry
 
 ---
  Makefile   | 3 +++
@@ -19,12 +19,12 @@ index 0e86575..da42ef0 100644
  	@echo Please see the README file regarding the terminfo entry of st.
 +	mkdir -p $(DESTDIR)$(PREFIX)/share/applications
 +	cp -f st.desktop $(DESTDIR)$(PREFIX)/share/applications
- 
+
  uninstall:
  	rm -f $(DESTDIR)$(PREFIX)/bin/st
  	rm -f $(DESTDIR)$(MANPREFIX)/man1/st.1
 +	rm -f $(DESTDIR)$(PREFIX)/share/applications/st.desktop
- 
+
  .PHONY: all options clean dist install uninstall
 diff --git a/st.desktop b/st.desktop
 new file mode 100644
@@ -39,6 +39,6 @@ index 0000000..a1b5116
 +Icon=utilities-terminal
 +Exec=st
 +Categories=System;TerminalEmulator
--- 
+--
 2.32.0
 

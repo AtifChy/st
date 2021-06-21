@@ -1,7 +1,7 @@
 From 42976685507a0c5f8f7040316736f44db4205d4f Mon Sep 17 00:00:00 2001
 From: AtifChy <iftakhar.awal@yahoo.com>
 Date: Mon, 21 Jun 2021 23:17:15 +0600
-Subject: [PATCH 05/14] xresources
+Subject: [PATCH 05/13] xresources
 
 ---
  config.def.h | 46 ++++++++++++++++++++++++++++---
@@ -14,7 +14,7 @@ index 87fa43c..8135b56 100644
 +++ b/config.def.h
 @@ -136,6 +136,8 @@ static const char *colorname[] = {
  	[255] = 0,
- 
+
  	/* more colors can be added after 255 to use with DefaultXX */
 +	"black",
 +	"#f6f6f6",
@@ -33,13 +33,13 @@ index 87fa43c..8135b56 100644
 +unsigned int defaultbg = 256;
 +static unsigned int defaultcs = 258;
 +static unsigned int defaultrcs = 259;
- 
+
  /*
   * Default shape of cursor
 @@ -186,6 +188,42 @@ static unsigned int defaultattr = 11;
   */
  static uint forcemousemod = ShiftMask;
- 
+
 +/*
 + * Xresources preferences to load at startup
 + */
@@ -88,13 +88,13 @@ index 3545cfb..30a1ab0 100644
  #include <X11/Xft/Xft.h>
  #include <X11/XKBlib.h>
 +#include <X11/Xresource.h>
- 
+
  char *argv0;
  #include "arg.h"
 @@ -47,6 +48,19 @@ typedef struct {
  	signed char appcursor; /* application cursor */
  } Key;
- 
+
 +/* Xresources preferences */
 +enum resource_type {
 +	STRING = 0,
@@ -121,20 +121,20 @@ index 3545cfb..30a1ab0 100644
 +	                    opt_class ? opt_class : "St"};
  	XWMHints wm = {.flags = InputHint, .input = 1};
  	XSizeHints *sizeh;
- 
+
 @@ -1203,8 +1217,6 @@ xinit(int cols, int rows)
  	pid_t thispid = getpid();
  	XColor xmousefg, xmousebg;
- 
+
 -	if (!(xw.dpy = XOpenDisplay(NULL)))
 -		die("can't open display\n");
  	xw.scr = XDefaultScreen(xw.dpy);
  	xw.vis = XDefaultVisual(xw.dpy, xw.scr);
- 
+
 @@ -2246,6 +2258,59 @@ run(void)
  	}
  }
- 
+
 +int
 +resource_load(XrmDatabase db, char *name, enum resource_type rtype, void *dst)
 +{
@@ -192,7 +192,7 @@ index 3545cfb..30a1ab0 100644
  usage(void)
  {
 @@ -2319,6 +2384,11 @@ run:
- 
+
  	setlocale(LC_CTYPE, "");
  	XSetLocaleModifiers("");
 +
@@ -203,6 +203,6 @@ index 3545cfb..30a1ab0 100644
  	cols = MAX(cols, 1);
  	rows = MAX(rows, 1);
  	tnew(cols, rows);
--- 
+--
 2.32.0
 

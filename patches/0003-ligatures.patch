@@ -1,7 +1,7 @@
 From 9a6d0f3b7d372ece61ba8728573f85dd9929c77b Mon Sep 17 00:00:00 2001
 From: AtifChy <iftakhar.awal@yahoo.com>
 Date: Mon, 21 Jun 2021 23:09:46 +0600
-Subject: [PATCH 03/14] ligatures
+Subject: [PATCH 03/13] ligatures
 
 ---
  Makefile  |   5 +-
@@ -21,23 +21,23 @@ index 18831ce..0e86575 100644
 --- a/Makefile
 +++ b/Makefile
 @@ -4,7 +4,7 @@
- 
+
  include config.mk
- 
+
 -SRC = st.c x.c sixel.c sixel_hls.c boxdraw.c
 +SRC = st.c x.c sixel.c sixel_hls.c boxdraw.c hb.c
  OBJ = $(SRC:.c=.o)
- 
+
  all: options st
 @@ -22,7 +22,8 @@ config.h:
  	$(CC) $(STCFLAGS) -c $<
- 
+
  st.o: config.h st.h win.h
 -x.o: arg.h config.h st.h win.h
 +x.o: arg.h config.h st.h win.h hb.h
 +hb.o: st.h
  boxdraw.o: config.h st.h boxdraw_data.h
- 
+
  $(OBJ): config.h config.mk
 diff --git a/config.mk b/config.mk
 index c070a4a..3d236f0 100644
@@ -55,7 +55,7 @@ index c070a4a..3d236f0 100644
 -       `$(PKG_CONFIG) --libs freetype2`
 +       `$(PKG_CONFIG) --libs freetype2` \
 +       `$(PKG_CONFIG) --libs harfbuzz`
- 
+
  # flags
  STCPPFLAGS = -DVERSION=\"$(VERSION)\" -D_XOPEN_SOURCE=600
 diff --git a/hb.c b/hb.c
@@ -253,7 +253,7 @@ index 57aae3f..58b4585 100644
 +  ATTR_LIGA       = 1 << 13,
  	ATTR_BOLD_FAINT = ATTR_BOLD | ATTR_FAINT,
  };
- 
+
 diff --git a/win.h b/win.h
 index 2572d43..2ed58b9 100644
 --- a/win.h
@@ -276,7 +276,7 @@ index 5275aac..91430ae 100644
  #include "st.h"
  #include "win.h"
 +#include "hb.h"
- 
+
  /* types used in config.h */
  typedef struct {
 @@ -1028,6 +1029,9 @@ xunloadfont(Font *f)
@@ -291,32 +291,32 @@ index 5275aac..91430ae 100644
  		XftFontClose(xw.dpy, frc[--frclen].font);
 @@ -1228,7 +1232,7 @@ xmakeglyphfontspecs(XftGlyphFontSpec *specs, const Glyph *glyphs, int len, int x
  		mode = glyphs[i].mode;
- 
+
  		/* Skip dummy wide-character spacing. */
 -		if (mode == ATTR_WDUMMY)
 +		if (mode & ATTR_WDUMMY)
  			continue;
- 
+
  		/* Determine font for glyph if different from previous glyph. */
 @@ -1340,6 +1344,9 @@ xmakeglyphfontspecs(XftGlyphFontSpec *specs, const Glyph *glyphs, int len, int x
  		numspecs++;
  	}
- 
+
 +	/* Harfbuzz transformation for ligatures. */
 +	hbtransform(specs, glyphs, len, x, y);
 +
  	return numspecs;
  }
- 
+
 @@ -1493,14 +1500,17 @@ xdrawglyph(Glyph g, int x, int y)
  }
- 
+
  void
 -xdrawcursor(int cx, int cy, Glyph g, int ox, int oy, Glyph og)
 +xdrawcursor(int cx, int cy, Glyph g, int ox, int oy, Glyph og, Line line, int len)
  {
  	Color drawcol;
- 
+
  	/* remove the old cursor */
  	if (selected(ox, oy))
  		og.mode ^= ATTR_REVERSE;
@@ -325,9 +325,9 @@ index 5275aac..91430ae 100644
 +	/* Redraw the line where cursor was previously.
 +	 * It will restore the ligatures broken by the cursor. */
 +	xdrawline(line, 0, oy, len);
- 
+
  	if (IS_SET(MODE_HIDE))
  		return;
--- 
+--
 2.32.0
 

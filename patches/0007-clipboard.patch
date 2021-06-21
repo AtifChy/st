@@ -1,7 +1,7 @@
 From a5b83fe56dd1ceac35cca5b1627f2025a30c60b7 Mon Sep 17 00:00:00 2001
 From: AtifChy <iftakhar.awal@yahoo.com>
 Date: Mon, 21 Jun 2021 23:18:33 +0600
-Subject: [PATCH 07/14] clipboard
+Subject: [PATCH 07/13] clipboard
 
 ---
  config.def.h | 6 +++---
@@ -31,7 +31,7 @@ index 8135b56..cf1f387 100644
 +	{ ShiftMask,            XK_Insert,      clippaste,      {.i =  0} },
  	{ TERMMOD,              XK_Num_Lock,    numlock,        {.i =  0} },
  };
- 
+
 diff --git a/x.c b/x.c
 index aa07260..a2e335c 100644
 --- a/x.c
@@ -43,8 +43,8 @@ index aa07260..a2e335c 100644
 +
 +	xclipcopy();
  }
- 
+
  void
--- 
+--
 2.32.0
 
