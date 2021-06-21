@@ -108,6 +108,8 @@ void printscreen(const Arg *);
 void printsel(const Arg *);
 void sendbreak(const Arg *);
 void toggleprinter(const Arg *);
+void copyurl(const Arg *);
+void opencopied(const Arg *);
 
 int tattrset(int);
 int tisaltscr(void);
