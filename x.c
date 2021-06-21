@@ -61,6 +61,11 @@ typedef struct {
 	void *dst;
 } ResourcePref;
 
+typedef enum {
+	PixelGeometry,
+	CellGeometry
+} Geometry;
+
 /* X modifiers */
 #define XK_ANY_MOD    UINT_MAX
 #define XK_NO_MOD     0
@@ -1121,7 +1126,7 @@ xicdestroy(XIC xim, XPointer client, XPointer call)
 }
 
 void
-xinit(int cols, int rows)
+xinit(int w, int h)
 {
 	XGCValues gcvalues;
 	Cursor cursor;
@@ -1144,8 +1149,16 @@ xinit(int cols, int rows)
 	xloadcols();
 
 	/* adjust fixed window geometry */
-	win.w = 2 * win.hborderpx + cols * win.cw;
-	win.h = 2 * win.vborderpx + rows * win.ch;
+	switch (geometry) {
+	case CellGeometry:
+		win.w = 2 * win.hborderpx + w * win.cw;
+		win.h = 2 * win.vborderpx + h * win.ch;
+		break;
+	case PixelGeometry:
+		win.w = w;
+		win.h = h;
+		break;
+	}
 	if (xw.gm & XNegative)
 		xw.l += DisplayWidth(xw.dpy, xw.scr) - win.w - 2;
 	if (xw.gm & YNegative)
@@ -2093,7 +2106,7 @@ void
 usage(void)
 {
 	die("usage: %s [-aiv] [-c class] [-f font] [-g geometry]"
-	    " [-n name] [-o file]\n"
+	    " [-G real_geometry] [-n name] [-o file]\n"
 	    "          [-T title] [-t title] [-w windowid]"
 	    " [[-e] command [args ...]]\n"
 	    "       %s [-aiv] [-c class] [-f font] [-g geometry]"
@@ -2126,6 +2139,12 @@ main(int argc, char *argv[])
 	case 'g':
 		xw.gm = XParseGeometry(EARGF(usage()),
 				&xw.l, &xw.t, &cols, &rows);
+		geometry = CellGeometry;
+		break;
+	case 'G':
+		xw.gm = XParseGeometry(EARGF(usage()),
+				&xw.l, &xw.t, &width, &height);
+		geometry = PixelGeometry;
 		break;
 	case 'i':
 		xw.isfixed = 1;
@@ -2167,10 +2186,19 @@ run:
 		die("Can't open display\n");
 
 	config_init();
+	switch (geometry) {
+	case CellGeometry:
+		xinit(cols, rows);
+		break;
+	case PixelGeometry:
+		xinit(width, height);
+		cols = (win.w - 2 * win.hborderpx) / win.cw;
+		rows = (win.h - 2 * win.vborderpx) / win.ch;
+		break;
+	}
 	cols = MAX(cols, 1);
 	rows = MAX(rows, 1);
 	tnew(cols, rows);
-	xinit(cols, rows);
 	xsetenv();
 	selinit();
 	run();
