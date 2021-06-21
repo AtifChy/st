@@ -1,7 +1,7 @@
-From e25d5c63d33e44316d2ac2470a73a4442ab38e4a Mon Sep 17 00:00:00 2001
-From: AtifChy <atif@archlinux.localdomain>
-Date: Mon, 21 Jun 2021 17:41:50 +0600
-Subject: [PATCH 12/16] 12-desktop-entry
+From 72205a837f899a7a29b6b355764c634157f7fcd4 Mon Sep 17 00:00:00 2001
+From: AtifChy <iftakhar.awal@yahoo.com>
+Date: Mon, 21 Jun 2021 19:02:48 +0600
+Subject: [PATCH 12/16] desktop-entry
 
 ---
  Makefile   | 3 +++

@@ -1,7 +1,7 @@
-From 8ee5930a1affb922265e63ce65e93eea0524dafb Mon Sep 17 00:00:00 2001
-From: AtifChy <atif@archlinux.localdomain>
-Date: Mon, 21 Jun 2021 17:39:41 +0600
-Subject: [PATCH 11/16] 11-url_copy_open
+From e85333eedd97ecca375de74ee50123f4be72e183 Mon Sep 17 00:00:00 2001
+From: AtifChy <iftakhar.awal@yahoo.com>
+Date: Mon, 21 Jun 2021 19:02:32 +0600
+Subject: [PATCH 11/16] url-copy-open
 
 ---
  config.def.h |   2 +

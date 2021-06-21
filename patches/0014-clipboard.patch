@@ -1,7 +1,7 @@
-From 607bb1f59c687f63758b889d8abdcaf211a93197 Mon Sep 17 00:00:00 2001
-From: AtifChy <atif@archlinux.localdomain>
-Date: Mon, 21 Jun 2021 18:00:05 +0600
-Subject: [PATCH 14/16] 14-clipboard
+From 02eec7cc651ed6466589b0bc9adc3a6ba6c1802e Mon Sep 17 00:00:00 2001
+From: AtifChy <iftakhar.awal@yahoo.com>
+Date: Mon, 21 Jun 2021 19:03:28 +0600
+Subject: [PATCH 14/16] clipboard
 
 ---
  config.def.h | 6 +++---

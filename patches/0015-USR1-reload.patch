@@ -1,17 +1,17 @@
-From b0b572566cc507a3368b15532e51b81bd7392b16 Mon Sep 17 00:00:00 2001
+From 314dca745009ca918344a798882bd6b18007dfd8 Mon Sep 17 00:00:00 2001
 From: AtifChy <iftakhar.awal@yahoo.com>
-Date: Mon, 21 Jun 2021 18:14:12 +0600
-Subject: [PATCH 16/16] 16-USR1-reload
+Date: Mon, 21 Jun 2021 19:03:49 +0600
+Subject: [PATCH 15/16] USR1-reload
 
 ---
  x.c | 31 ++++++++++++++++++++++++++++++-
  1 file changed, 30 insertions(+), 1 deletion(-)
 
 diff --git a/x.c b/x.c
-index 9faa9df..e057753 100644
+index 310bb7b..6ed4ce0 100644
 --- a/x.c
 +++ b/x.c
-@@ -214,6 +214,8 @@ static int match(uint, uint);
+@@ -213,6 +213,8 @@ static int match(uint, uint);
  static void run(void);
  static void usage(void);
  
@@ -20,7 +20,7 @@ index 9faa9df..e057753 100644
  static void (*handler[LASTEvent])(XEvent *) = {
  	[KeyPress] = kpress,
  	[ClientMessage] = cmessage,
-@@ -2048,6 +2050,10 @@ cmessage(XEvent *e)
+@@ -2032,6 +2034,10 @@ cmessage(XEvent *e)
  	} else if (e->xclient.data.l[0] == xw.wmdeletewin) {
  		ttyhangup();
  		exit(0);
@@ -31,7 +31,7 @@ index 9faa9df..e057753 100644
  	}
  }
  
-@@ -2211,7 +2217,7 @@ config_init(void)
+@@ -2195,7 +2201,7 @@ config_init(void)
  	ResourcePref *p;
  
  	XrmInitialize();
@@ -40,7 +40,7 @@ index 9faa9df..e057753 100644
  	if (!resm)
  		return;
  
-@@ -2233,6 +2239,28 @@ usage(void)
+@@ -2217,6 +2223,28 @@ usage(void)
  	    " [stty_args ...]\n", argv0, argv0);
  }
  
@@ -69,7 +69,7 @@ index 9faa9df..e057753 100644
  int
  main(int argc, char *argv[])
  {
-@@ -2319,6 +2347,7 @@ run:
+@@ -2300,6 +2328,7 @@ run:
  	}
  	cols = MAX(cols, 1);
  	rows = MAX(rows, 1);

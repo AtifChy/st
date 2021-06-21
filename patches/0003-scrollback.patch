@@ -1,7 +1,7 @@
-From 727d133c033132ca89755d2c86567a903b538e38 Mon Sep 17 00:00:00 2001
-From: AtifChy <atif@archlinux.localdomain>
-Date: Mon, 21 Jun 2021 15:31:15 +0600
-Subject: [PATCH 03/16] 3-scrollback
+From 79caebd3108c1c32ac9ff7fd8ec462a3f1765189 Mon Sep 17 00:00:00 2001
+From: AtifChy <iftakhar.awal@yahoo.com>
+Date: Mon, 21 Jun 2021 18:59:13 +0600
+Subject: [PATCH 03/16] scrollback
 
 ---
  config.def.h |   9 ++++

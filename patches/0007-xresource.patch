@@ -1,7 +1,7 @@
-From 29272cf6fd36218a4214ec6c683f92d354ac2b5c Mon Sep 17 00:00:00 2001
-From: AtifChy <atif@archlinux.localdomain>
-Date: Mon, 21 Jun 2021 15:50:53 +0600
-Subject: [PATCH 07/16] 7-xresources
+From ebd31eea38e28217dbf528fa9fff854765651ea1 Mon Sep 17 00:00:00 2001
+From: AtifChy <iftakhar.awal@yahoo.com>
+Date: Mon, 21 Jun 2021 19:00:45 +0600
+Subject: [PATCH 07/16] xresource
 
 ---
  config.def.h | 47 ++++++++++++++++++++++++++++---

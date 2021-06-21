@@ -1,7 +1,7 @@
-From afe06bb8040f94b07f3afd4f4c53e7afe48ec978 Mon Sep 17 00:00:00 2001
-From: AtifChy <atif@archlinux.localdomain>
-Date: Mon, 21 Jun 2021 15:38:56 +0600
-Subject: [PATCH 05/16] 5-dynamic_cursor
+From 9b3646117718590a6812cd99ee8a4b7c8aa3f78b Mon Sep 17 00:00:00 2001
+From: AtifChy <iftakhar.awal@yahoo.com>
+Date: Mon, 21 Jun 2021 19:00:12 +0600
+Subject: [PATCH 05/16] dynamic-cursor
 
 ---
  x.c | 19 +++++++++++++++++--

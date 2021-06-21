@@ -1,7 +1,7 @@
-From d5e30c297cd67a16289705af5a1aae8eee2c41bc Mon Sep 17 00:00:00 2001
-From: AtifChy <atif@archlinux.localdomain>
-Date: Mon, 21 Jun 2021 15:58:00 +0600
-Subject: [PATCH 08/16] 8-anysize
+From 5f78332ba6cd1f19cef06d64553dc782f91274b8 Mon Sep 17 00:00:00 2001
+From: AtifChy <iftakhar.awal@yahoo.com>
+Date: Mon, 21 Jun 2021 19:00:54 +0600
+Subject: [PATCH 08/16] anysize
 
 ---
  x.c | 52 ++++++++++++++++++++++++++++------------------------
