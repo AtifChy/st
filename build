@@ -1,0 +1,4 @@
+#!/bin/sh
+rm -v config.h
+make
+

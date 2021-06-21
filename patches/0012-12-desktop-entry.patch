@@ -1,0 +1,45 @@
+From e25d5c63d33e44316d2ac2470a73a4442ab38e4a Mon Sep 17 00:00:00 2001
+From: AtifChy <atif@archlinux.localdomain>
+Date: Mon, 21 Jun 2021 17:41:50 +0600
+Subject: [PATCH 12/16] 12-desktop-entry
+
+---
+ Makefile   | 3 +++
+ st.desktop | 8 ++++++++
+ 2 files changed, 11 insertions(+)
+ create mode 100644 st.desktop
+
+diff --git a/Makefile b/Makefile
+index 2ffd3c8..19f5e41 100644
+--- a/Makefile
++++ b/Makefile
+@@ -51,9 +51,12 @@ install: st
+ 	chmod 644 $(DESTDIR)$(MANPREFIX)/man1/st.1
+ 	tic -sx st.info
+ 	@echo Please see the README file regarding the terminfo entry of st.
++	mkdir -p $(DESTDIR)$(PREFIX)/share/applications
++	cp -f st.desktop $(DESTDIR)$(PREFIX)/share/applications
+ 
+ uninstall:
+ 	rm -f $(DESTDIR)$(PREFIX)/bin/st
+ 	rm -f $(DESTDIR)$(MANPREFIX)/man1/st.1
++	rm -f $(DESTDIR)$(PREFIX)/share/applications/st.desktop
+ 
+ .PHONY: all options clean dist install uninstall
+diff --git a/st.desktop b/st.desktop
+new file mode 100644
+index 0000000..49029d8
+--- /dev/null
++++ b/st.desktop
+@@ -0,0 +1,8 @@
++[Desktop Entry]
++Name=st
++Comment=st is a simple terminal implementation for X
++Exec=st
++Icon=utilities-terminal
++Terminal=false
++Type=Application
++Categories=System;TerminalEmulator;
+-- 
+2.32.0
+

@@ -1,0 +1,27 @@
+From d4851213862969a0a182c3cee3c5720f470f608d Mon Sep 17 00:00:00 2001
+From: AtifChy <atif@archlinux.localdomain>
+Date: Mon, 21 Jun 2021 15:40:30 +0600
+Subject: [PATCH 06/16] 6-bold_isnt_bright
+
+---
+ x.c | 4 ----
+ 1 file changed, 4 deletions(-)
+
+diff --git a/x.c b/x.c
+index 093d44f..9a925af 100644
+--- a/x.c
++++ b/x.c
+@@ -1397,10 +1397,6 @@ xdrawglyphfontspecs(const XftGlyphFontSpec *specs, Glyph base, int len, int x, i
+ 		bg = &dc.col[base.bg];
+ 	}
+ 
+-	/* Change basic system colors [0-7] to bright system colors [8-15] */
+-	if ((base.mode & ATTR_BOLD_FAINT) == ATTR_BOLD && BETWEEN(base.fg, 0, 7))
+-		fg = &dc.col[base.fg + 8];
+-
+ 	if (IS_SET(MODE_REVERSE)) {
+ 		if (fg == &dc.col[defaultfg]) {
+ 			fg = &dc.col[defaultbg];
+-- 
+2.32.0
+
