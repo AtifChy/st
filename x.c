@@ -213,6 +213,8 @@ static int match(uint, uint);
 static void run(void);
 static void usage(void);
 
+static void config_init(void);
+
 static void (*handler[LASTEvent])(XEvent *) = {
 	[KeyPress] = kpress,
 	[ClientMessage] = cmessage,
@@ -2032,6 +2034,10 @@ cmessage(XEvent *e)
 	} else if (e->xclient.data.l[0] == xw.wmdeletewin) {
 		ttyhangup();
 		exit(0);
+	} else if (strcmp(XGetAtomName(xw.dpy, e->xclient.message_type), "ReloadColors") == 0) {
+		config_init();
+		xloadcols();
+		cresize(win.w, win.h);
 	}
 }
 
@@ -2195,7 +2201,7 @@ config_init(void)
 	ResourcePref *p;
 
 	XrmInitialize();
-	resm = XResourceManagerString(xw.dpy);
+	resm = XResourceManagerString(XOpenDisplay(NULL));
 	if (!resm)
 		return;
 
@@ -2215,6 +2221,28 @@ usage(void)
 	    " [-n name] [-o file]\n"
 	    "          [-T title] [-t title] [-w windowid] -l line"
 	    " [stty_args ...]\n", argv0, argv0);
+}
+
+void
+reload(int sig)
+{
+	config_init();
+
+	/* colors, fonts */
+	xloadcols();
+	xunloadfonts();
+	usedfont = (opt_font == NULL)? font : opt_font;
+	xloadfonts(usedfont, 0);
+
+	/* pretend the window just got resized */
+	cresize(win.w, win.h);
+
+	redraw();
+
+	/* triggers re-render if we're visible. */
+	ttywrite("\033[O", 3, 1);
+
+	signal(SIGUSR1, reload);
 }
 
 int
@@ -2300,6 +2328,7 @@ run:
 	}
 	cols = MAX(cols, 1);
 	rows = MAX(rows, 1);
+	signal(SIGUSR1, reload);
 	tnew(cols, rows);
 	xsetenv();
 	selinit();
