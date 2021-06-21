@@ -1,17 +1,17 @@
-From afe06bb8040f94b07f3afd4f4c53e7afe48ec978 Mon Sep 17 00:00:00 2001
-From: AtifChy <atif@archlinux.localdomain>
-Date: Mon, 21 Jun 2021 15:38:56 +0600
-Subject: [PATCH 05/16] 5-dynamic_cursor
+From 06f31cdab76140278c2c9cf1370f2ecfb6d1d26c Mon Sep 17 00:00:00 2001
+From: AtifChy <iftakhar.awal@yahoo.com>
+Date: Mon, 21 Jun 2021 23:33:56 +0600
+Subject: [PATCH 11/14] dynamic-cursor-color
 
 ---
  x.c | 19 +++++++++++++++++--
  1 file changed, 17 insertions(+), 2 deletions(-)
 
 diff --git a/x.c b/x.c
-index c7b7417..093d44f 100644
+index 1abcd57..832b3a5 100644
 --- a/x.c
 +++ b/x.c
-@@ -1509,6 +1509,7 @@ void
+@@ -1616,6 +1616,7 @@ void
  xdrawcursor(int cx, int cy, Glyph g, int ox, int oy, Glyph og, Line line, int len)
  {
  	Color drawcol;
@@ -19,7 +19,7 @@ index c7b7417..093d44f 100644
  
  	/* remove the old cursor */
  	if (selected(ox, oy))
-@@ -1541,10 +1542,24 @@ xdrawcursor(int cx, int cy, Glyph g, int ox, int oy, Glyph og, Line line, int le
+@@ -1648,10 +1649,24 @@ xdrawcursor(int cx, int cy, Glyph g, int ox, int oy, Glyph og, Line line, int le
  			g.fg = defaultfg;
  			g.bg = defaultrcs;
  		} else {

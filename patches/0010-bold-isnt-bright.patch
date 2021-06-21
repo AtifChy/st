@@ -1,17 +1,17 @@
-From d4851213862969a0a182c3cee3c5720f470f608d Mon Sep 17 00:00:00 2001
-From: AtifChy <atif@archlinux.localdomain>
-Date: Mon, 21 Jun 2021 15:40:30 +0600
-Subject: [PATCH 06/16] 6-bold_isnt_bright
+From 0380cdac8181c5a827ad81b3d1ab19d6aea7df4c Mon Sep 17 00:00:00 2001
+From: AtifChy <iftakhar.awal@yahoo.com>
+Date: Mon, 21 Jun 2021 23:32:51 +0600
+Subject: [PATCH 10/14] bold-isnt-bright
 
 ---
  x.c | 4 ----
  1 file changed, 4 deletions(-)
 
 diff --git a/x.c b/x.c
-index 093d44f..9a925af 100644
+index 89acec5..1abcd57 100644
 --- a/x.c
 +++ b/x.c
-@@ -1397,10 +1397,6 @@ xdrawglyphfontspecs(const XftGlyphFontSpec *specs, Glyph base, int len, int x, i
+@@ -1508,10 +1508,6 @@ xdrawglyphfontspecs(const XftGlyphFontSpec *specs, Glyph base, int len, int x, i
  		bg = &dc.col[base.bg];
  	}
  

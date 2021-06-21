@@ -1,30 +1,30 @@
-From daae47e4704abfa49a259c82dbdabd791d82adfe Mon Sep 17 00:00:00 2001
-From: AtifChy <atif@archlinux.localdomain>
-Date: Mon, 21 Jun 2021 15:20:40 +0600
-Subject: [PATCH 01/16] 1-boxdraw
+From eceec1b70dde08d3ac04a64171c726897c591aed Mon Sep 17 00:00:00 2001
+From: AtifChy <iftakhar.awal@yahoo.com>
+Date: Mon, 21 Jun 2021 23:08:12 +0600
+Subject: [PATCH 02/14] boxdraw
 
 ---
  Makefile       |   3 +-
- boxdraw.c      | 194 ++++++++++++++++++++++++++++++++++++++++++++
+ boxdraw.c      | 195 ++++++++++++++++++++++++++++++++++++++++++++
  boxdraw_data.h | 214 +++++++++++++++++++++++++++++++++++++++++++++++++
  config.def.h   |  12 +++
  st.c           |   3 +
  st.h           |  10 +++
  x.c            |  21 +++--
- 7 files changed, 451 insertions(+), 6 deletions(-)
+ 7 files changed, 452 insertions(+), 6 deletions(-)
  create mode 100644 boxdraw.c
  create mode 100644 boxdraw_data.h
 
 diff --git a/Makefile b/Makefile
-index 470ac86..6dfa212 100644
+index 0bc8774..18831ce 100644
 --- a/Makefile
 +++ b/Makefile
 @@ -4,7 +4,7 @@
  
  include config.mk
  
--SRC = st.c x.c
-+SRC = st.c x.c boxdraw.c
+-SRC = st.c x.c sixel.c sixel_hls.c
++SRC = st.c x.c sixel.c sixel_hls.c boxdraw.c
  OBJ = $(SRC:.c=.o)
  
  all: options st
@@ -38,16 +38,17 @@ index 470ac86..6dfa212 100644
  
 diff --git a/boxdraw.c b/boxdraw.c
 new file mode 100644
-index 0000000..28a92d0
+index 0000000..a4e84c2
 --- /dev/null
 +++ b/boxdraw.c
-@@ -0,0 +1,194 @@
+@@ -0,0 +1,195 @@
 +/*
 + * Copyright 2018 Avi Halachmi (:avih) avihpit@yahoo.com https://github.com/avih
 + * MIT/X Consortium License
 + */
 +
 +#include <X11/Xft/Xft.h>
++#include "sixel.h"
 +#include "st.h"
 +#include "boxdraw_data.h"
 +
@@ -457,7 +458,7 @@ index 0000000..7890500
 +	/* U+2571 - U+2573: unsupported (diagonals) */
 +};
 diff --git a/config.def.h b/config.def.h
-index 6f05dce..36a1af3 100644
+index 6f05dce..6533be0 100644
 --- a/config.def.h
 +++ b/config.def.h
 @@ -67,6 +67,18 @@ static unsigned int blinktimeout = 800;
@@ -470,8 +471,8 @@ index 6f05dce..36a1af3 100644
 + *    Bold affects lines thickness if boxdraw_bold is not 0. Italic is ignored.
 + * 0: disable (render all U25XX glyphs normally from the font).
 + */
-+const int boxdraw = 1;
-+const int boxdraw_bold = 1;
++const int boxdraw = 0;
++const int boxdraw_bold = 0;
 +
 +/* braille (U28XX):  1: render as adjacent "pixels",  0: use font */
 +const int boxdraw_braille = 0;
@@ -480,10 +481,10 @@ index 6f05dce..36a1af3 100644
   * bell volume. It must be a value between -100 and 100. Use 0 for disabling
   * it
 diff --git a/st.c b/st.c
-index 76b7e0d..248728f 100644
+index ed3c791..730de17 100644
 --- a/st.c
 +++ b/st.c
-@@ -1219,6 +1219,9 @@ tsetchar(Rune u, Glyph *attr, int x, int y)
+@@ -1237,6 +1237,9 @@ tsetchar(Rune u, Glyph *attr, int x, int y)
  	term.dirty[y] = 1;
  	term.line[y][x] = *attr;
  	term.line[y][x].u = u;
@@ -494,18 +495,18 @@ index 76b7e0d..248728f 100644
  
  void
 diff --git a/st.h b/st.h
-index 3d351b6..8d26273 100644
+index ed4db48..57aae3f 100644
 --- a/st.h
 +++ b/st.h
-@@ -33,6 +33,7 @@ enum glyph_attribute {
- 	ATTR_WRAP       = 1 << 8,
+@@ -34,6 +34,7 @@ enum glyph_attribute {
  	ATTR_WIDE       = 1 << 9,
  	ATTR_WDUMMY     = 1 << 10,
-+	ATTR_BOXDRAW    = 1 << 11,
+ 	ATTR_SIXEL      = 1 << 11,
++  ATTR_BOXDRAW    = 1 << 12,
  	ATTR_BOLD_FAINT = ATTR_BOLD | ATTR_FAINT,
  };
  
-@@ -111,6 +112,14 @@ void *xmalloc(size_t);
+@@ -129,6 +130,14 @@ void *xmalloc(size_t);
  void *xrealloc(void *, size_t);
  char *xstrdup(char *);
  
@@ -520,16 +521,16 @@ index 3d351b6..8d26273 100644
  /* config.h globals */
  extern char *utmp;
  extern char *scroll;
-@@ -123,3 +132,4 @@ extern char *termname;
+@@ -141,3 +150,4 @@ extern char *termname;
  extern unsigned int tabspaces;
  extern unsigned int defaultfg;
  extern unsigned int defaultbg;
 +extern const int boxdraw, boxdraw_bold, boxdraw_braille;
 diff --git a/x.c b/x.c
-index 210f184..9b29264 100644
+index 6d187ff..5275aac 100644
 --- a/x.c
 +++ b/x.c
-@@ -1205,6 +1205,8 @@ xinit(int cols, int rows)
+@@ -1202,6 +1202,8 @@ xinit(int cols, int rows)
  	xsel.xtarget = XInternAtom(xw.dpy, "UTF8_STRING", 0);
  	if (xsel.xtarget == None)
  		xsel.xtarget = XA_STRING;
@@ -538,7 +539,7 @@ index 210f184..9b29264 100644
  }
  
  int
-@@ -1251,8 +1253,13 @@ xmakeglyphfontspecs(XftGlyphFontSpec *specs, const Glyph *glyphs, int len, int x
+@@ -1248,8 +1250,13 @@ xmakeglyphfontspecs(XftGlyphFontSpec *specs, const Glyph *glyphs, int len, int x
  			yp = winy + font->ascent;
  		}
  
@@ -554,7 +555,7 @@ index 210f184..9b29264 100644
  		if (glyphidx) {
  			specs[numspecs].font = font->match;
  			specs[numspecs].glyph = glyphidx;
-@@ -1456,8 +1463,12 @@ xdrawglyphfontspecs(const XftGlyphFontSpec *specs, Glyph base, int len, int x, i
+@@ -1453,8 +1460,12 @@ xdrawglyphfontspecs(const XftGlyphFontSpec *specs, Glyph base, int len, int x, i
  	r.width = width;
  	XftDrawSetClipRectangles(xw.draw, winx, winy, &r, 1);
  
@@ -569,7 +570,7 @@ index 210f184..9b29264 100644
  
  	/* Render underline and strikethrough. */
  	if (base.mode & ATTR_UNDERLINE) {
-@@ -1500,7 +1511,7 @@ xdrawcursor(int cx, int cy, Glyph g, int ox, int oy, Glyph og)
+@@ -1497,7 +1508,7 @@ xdrawcursor(int cx, int cy, Glyph g, int ox, int oy, Glyph og)
  	/*
  	 * Select the right color for the right mode.
  	 */

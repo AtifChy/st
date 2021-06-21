@@ -1,18 +1,18 @@
-From 29272cf6fd36218a4214ec6c683f92d354ac2b5c Mon Sep 17 00:00:00 2001
-From: AtifChy <atif@archlinux.localdomain>
-Date: Mon, 21 Jun 2021 15:50:53 +0600
-Subject: [PATCH 07/16] 7-xresources
+From 42976685507a0c5f8f7040316736f44db4205d4f Mon Sep 17 00:00:00 2001
+From: AtifChy <iftakhar.awal@yahoo.com>
+Date: Mon, 21 Jun 2021 23:17:15 +0600
+Subject: [PATCH 05/14] xresources
 
 ---
- config.def.h | 47 ++++++++++++++++++++++++++++---
+ config.def.h | 46 ++++++++++++++++++++++++++++---
  x.c          | 78 +++++++++++++++++++++++++++++++++++++++++++++++++---
- 2 files changed, 117 insertions(+), 8 deletions(-)
+ 2 files changed, 116 insertions(+), 8 deletions(-)
 
 diff --git a/config.def.h b/config.def.h
-index 7fc81e0..f53a0cf 100644
+index 87fa43c..8135b56 100644
 --- a/config.def.h
 +++ b/config.def.h
-@@ -135,6 +135,8 @@ static const char *colorname[] = {
+@@ -136,6 +136,8 @@ static const char *colorname[] = {
  	[255] = 0,
  
  	/* more colors can be added after 255 to use with DefaultXX */
@@ -21,7 +21,7 @@ index 7fc81e0..f53a0cf 100644
  	"#cccccc",
  	"#555555",
  };
-@@ -144,10 +146,10 @@ static const char *colorname[] = {
+@@ -145,10 +147,10 @@ static const char *colorname[] = {
   * Default colors (colorname index)
   * foreground, background, cursor, reverse cursor
   */
@@ -35,8 +35,8 @@ index 7fc81e0..f53a0cf 100644
 +static unsigned int defaultrcs = 259;
  
  /*
-  * https://invisible-island.net/xterm/ctlseqs/ctlseqs.html#h4-Functions-using-CSI-_-ordered-by-the-final-character-lparen-s-rparen:CSI-Ps-SP-q.1D81
-@@ -192,6 +194,43 @@ static unsigned int defaultattr = 11;
+  * Default shape of cursor
+@@ -186,6 +188,42 @@ static unsigned int defaultattr = 11;
   */
  static uint forcemousemod = ShiftMask;
  
@@ -68,7 +68,6 @@ index 7fc81e0..f53a0cf 100644
 +		{ "shell",        STRING,  &shell },
 +		{ "minlatency",   INTEGER, &minlatency },
 +		{ "maxlatency",   INTEGER, &maxlatency },
-+		{ "cursorstyle",  INTEGER, &cursorstyle },
 +		{ "blinktimeout", INTEGER, &blinktimeout },
 +		{ "bellvolume",   INTEGER, &bellvolume },
 +		{ "tabspaces",    INTEGER, &tabspaces },
@@ -81,7 +80,7 @@ index 7fc81e0..f53a0cf 100644
   * Internal mouse shortcuts.
   * Beware that overloading Button1 will disable the selection.
 diff --git a/x.c b/x.c
-index 9a925af..6493d87 100644
+index 3545cfb..30a1ab0 100644
 --- a/x.c
 +++ b/x.c
 @@ -14,6 +14,7 @@
@@ -112,7 +111,7 @@ index 9a925af..6493d87 100644
  /* X modifiers */
  #define XK_ANY_MOD    UINT_MAX
  #define XK_NO_MOD     0
-@@ -832,8 +846,8 @@ xclear(int x1, int y1, int x2, int y2)
+@@ -829,8 +843,8 @@ xclear(int x1, int y1, int x2, int y2)
  void
  xhints(void)
  {
@@ -123,7 +122,7 @@ index 9a925af..6493d87 100644
  	XWMHints wm = {.flags = InputHint, .input = 1};
  	XSizeHints *sizeh;
  
-@@ -1111,8 +1125,6 @@ xinit(int cols, int rows)
+@@ -1203,8 +1217,6 @@ xinit(int cols, int rows)
  	pid_t thispid = getpid();
  	XColor xmousefg, xmousebg;
  
@@ -132,7 +131,7 @@ index 9a925af..6493d87 100644
  	xw.scr = XDefaultScreen(xw.dpy);
  	xw.vis = XDefaultVisual(xw.dpy, xw.scr);
  
-@@ -2020,6 +2032,59 @@ run(void)
+@@ -2246,6 +2258,59 @@ run(void)
  	}
  }
  
@@ -192,7 +191,7 @@ index 9a925af..6493d87 100644
  void
  usage(void)
  {
-@@ -2093,6 +2158,11 @@ run:
+@@ -2319,6 +2384,11 @@ run:
  
  	setlocale(LC_CTYPE, "");
  	XSetLocaleModifiers("");

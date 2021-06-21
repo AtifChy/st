@@ -1,7 +1,7 @@
-From 4feff143dde59a32dc79e11e1687ef16506bc95b Mon Sep 17 00:00:00 2001
-From: AtifChy <atif@archlinux.localdomain>
-Date: Mon, 21 Jun 2021 15:36:21 +0600
-Subject: [PATCH 04/16] 4-blinking cursor
+From dace990064fb3f58eb4d3646a32ecb0f9257a204 Mon Sep 17 00:00:00 2001
+From: AtifChy <iftakhar.awal@yahoo.com>
+Date: Mon, 21 Jun 2021 23:35:07 +0600
+Subject: [PATCH 12/14] blinking-cursor
 
 ---
  config.def.h | 19 +++++++++++++------
@@ -9,11 +9,11 @@ Subject: [PATCH 04/16] 4-blinking cursor
  2 files changed, 45 insertions(+), 16 deletions(-)
 
 diff --git a/config.def.h b/config.def.h
-index 7b2a7e3..7fc81e0 100644
+index 2ed367a..d9e5af7 100644
 --- a/config.def.h
 +++ b/config.def.h
-@@ -150,13 +150,20 @@ static unsigned int defaultcs = 256;
- static unsigned int defaultrcs = 257;
+@@ -153,13 +153,20 @@ static unsigned int defaultcs = 258;
+ static unsigned int defaultrcs = 259;
  
  /*
 - * Default shape of cursor
@@ -40,18 +40,18 @@ index 7b2a7e3..7fc81e0 100644
  /*
   * Default columns and rows numbers
 diff --git a/x.c b/x.c
-index a28f107..c7b7417 100644
+index 832b3a5..257ca53 100644
 --- a/x.c
 +++ b/x.c
-@@ -255,6 +255,7 @@ static char *opt_name  = NULL;
+@@ -262,6 +262,7 @@ static char *opt_name  = NULL;
  static char *opt_title = NULL;
  
  static int oldbutton = 3; /* button event on startup: 3 = release */
 +static int cursorblinks = 0;
  
- void
- clipcopy(const Arg *dummy)
-@@ -1549,16 +1550,19 @@ xdrawcursor(int cx, int cy, Glyph g, int ox, int oy, Glyph og, Line line, int le
+ TermWindow
+ gettermwindow()
+@@ -1672,16 +1673,19 @@ xdrawcursor(int cx, int cy, Glyph g, int ox, int oy, Glyph og, Line line, int le
  	/* draw the new one */
  	if (IS_SET(MODE_FOCUSED)) {
  		switch (win.cursor) {
@@ -78,7 +78,7 @@ index a28f107..c7b7417 100644
  			XftDrawRect(xw.draw, &drawcol,
  					borderpx + cx * win.cw,
  					borderpx + (cy + 1) * win.ch - \
-@@ -1566,12 +1570,23 @@ xdrawcursor(int cx, int cy, Glyph g, int ox, int oy, Glyph og, Line line, int le
+@@ -1689,12 +1693,23 @@ xdrawcursor(int cx, int cy, Glyph g, int ox, int oy, Glyph og, Line line, int le
  					win.cw, cursorthickness);
  			break;
  		case 5: /* Blinking bar */
@@ -102,7 +102,7 @@ index a28f107..c7b7417 100644
  		}
  	} else {
  		XftDrawRect(xw.draw, &drawcol,
-@@ -1713,9 +1728,12 @@ xsetmode(int set, unsigned int flags)
+@@ -1999,9 +2014,12 @@ xsetmode(int set, unsigned int flags)
  int
  xsetcursor(int cursor)
  {
@@ -116,7 +116,7 @@ index a28f107..c7b7417 100644
  	return 0;
  }
  
-@@ -1959,6 +1977,10 @@ run(void)
+@@ -2245,6 +2263,10 @@ run(void)
  		if (FD_ISSET(ttyfd, &rfd) || xev) {
  			if (!drawing) {
  				trigger = now;
@@ -127,7 +127,7 @@ index a28f107..c7b7417 100644
  				drawing = 1;
  			}
  			timeout = (maxlatency - TIMEDIFF(now, trigger)) \
-@@ -1969,7 +1991,7 @@ run(void)
+@@ -2255,7 +2277,7 @@ run(void)
  
  		/* idle detected or maxlatency exhausted -> draw */
  		timeout = -1;
@@ -136,7 +136,7 @@ index a28f107..c7b7417 100644
  			timeout = blinktimeout - TIMEDIFF(now, lastblink);
  			if (timeout <= 0) {
  				if (-timeout > blinktimeout) /* start visible */
-@@ -2005,7 +2027,7 @@ main(int argc, char *argv[])
+@@ -2366,7 +2388,7 @@ main(int argc, char *argv[])
  {
  	xw.l = xw.t = 0;
  	xw.isfixed = False;

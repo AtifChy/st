@@ -1,16 +1,16 @@
-From e25d5c63d33e44316d2ac2470a73a4442ab38e4a Mon Sep 17 00:00:00 2001
-From: AtifChy <atif@archlinux.localdomain>
-Date: Mon, 21 Jun 2021 17:41:50 +0600
-Subject: [PATCH 12/16] 12-desktop-entry
+From 23614054e68c618bad2d542a64c33e4534072947 Mon Sep 17 00:00:00 2001
+From: AtifChy <iftakhar.awal@yahoo.com>
+Date: Mon, 21 Jun 2021 23:18:59 +0600
+Subject: [PATCH 08/14] desktop-entry
 
 ---
  Makefile   | 3 +++
- st.desktop | 8 ++++++++
- 2 files changed, 11 insertions(+)
+ st.desktop | 7 +++++++
+ 2 files changed, 10 insertions(+)
  create mode 100644 st.desktop
 
 diff --git a/Makefile b/Makefile
-index 2ffd3c8..19f5e41 100644
+index 0e86575..da42ef0 100644
 --- a/Makefile
 +++ b/Makefile
 @@ -51,9 +51,12 @@ install: st
@@ -28,18 +28,17 @@ index 2ffd3c8..19f5e41 100644
  .PHONY: all options clean dist install uninstall
 diff --git a/st.desktop b/st.desktop
 new file mode 100644
-index 0000000..49029d8
+index 0000000..a1b5116
 --- /dev/null
 +++ b/st.desktop
-@@ -0,0 +1,8 @@
+@@ -0,0 +1,7 @@
 +[Desktop Entry]
-+Name=st
-+Comment=st is a simple terminal implementation for X
-+Exec=st
-+Icon=utilities-terminal
-+Terminal=false
 +Type=Application
-+Categories=System;TerminalEmulator;
++Name=st
++Comment=simple-terminal emulator for X
++Icon=utilities-terminal
++Exec=st
++Categories=System;TerminalEmulator
 -- 
 2.32.0
 

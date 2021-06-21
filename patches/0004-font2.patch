@@ -1,7 +1,7 @@
-From 83a93d0734800cd74ba2c5693f49ee260d04dd7b Mon Sep 17 00:00:00 2001
-From: AtifChy <atif@archlinux.localdomain>
-Date: Mon, 21 Jun 2021 17:47:14 +0600
-Subject: [PATCH 13/16] 13-font2
+From 3ed2c4fa9a6df8ccb1b1a6b1460e94d8117da499 Mon Sep 17 00:00:00 2001
+From: AtifChy <iftakhar.awal@yahoo.com>
+Date: Mon, 21 Jun 2021 23:10:00 +0600
+Subject: [PATCH 04/14] font2
 
 ---
  config.def.h |   6 +++
@@ -9,7 +9,7 @@ Subject: [PATCH 13/16] 13-font2
  2 files changed, 107 insertions(+)
 
 diff --git a/config.def.h b/config.def.h
-index e93e449..a80c8a5 100644
+index 6533be0..87fa43c 100644
 --- a/config.def.h
 +++ b/config.def.h
 @@ -6,6 +6,12 @@
@@ -26,10 +26,10 @@ index e93e449..a80c8a5 100644
  
  /*
 diff --git a/x.c b/x.c
-index a48da89..005733e 100644
+index 91430ae..3545cfb 100644
 --- a/x.c
 +++ b/x.c
-@@ -179,6 +179,8 @@ static void xhints(void);
+@@ -149,6 +149,8 @@ static void xhints(void);
  static int xloadcolor(int, const char *, Color *);
  static int xloadfont(Font *, FcPattern *);
  static void xloadfonts(char *, double);
@@ -38,7 +38,7 @@ index a48da89..005733e 100644
  static void xunloadfont(Font *);
  static void xunloadfonts(void);
  static void xsetenv(void);
-@@ -329,6 +331,7 @@ zoomabs(const Arg *arg)
+@@ -304,6 +306,7 @@ zoomabs(const Arg *arg)
  {
  	xunloadfonts();
  	xloadfonts(usedfont, arg->f);
@@ -46,7 +46,7 @@ index a48da89..005733e 100644
  	cresize(0, 0);
  	redraw();
  	xhints();
-@@ -1046,6 +1049,101 @@ xloadfonts(char *fontstr, double fontsize)
+@@ -1017,6 +1020,101 @@ xloadfonts(char *fontstr, double fontsize)
  	FcPatternDestroy(pattern);
  }
  
@@ -55,7 +55,7 @@ index a48da89..005733e 100644
 +{
 +	FcPattern *match;
 +	FcResult result;
-+
++	
 +	match = FcFontMatch(NULL, pattern, &result);
 +	if (!match) {
 +		return 1;
@@ -97,50 +97,50 @@ index a48da89..005733e 100644
 +	}
 +
 +	for (fp = font2; fp - font2 < fc; ++fp) {
-+
++	
 +		if (**fp == '-')
 +			pattern = XftXlfdParse(*fp, False, False);
 +		else
 +			pattern = FcNameParse((FcChar8 *)*fp);
-+
++	
 +		if (!pattern)
 +			die("can't open spare font %s\n", *fp);
-+
++	   		
 +		if (defaultfontsize > 0) {
 +			sizeshift = usedfontsize - defaultfontsize;
 +			if (sizeshift != 0 &&
 +					FcPatternGetDouble(pattern, FC_PIXEL_SIZE, 0, &fontval) ==
-+					FcResultMatch) {
++					FcResultMatch) {	
 +				fontval += sizeshift;
 +				FcPatternDel(pattern, FC_PIXEL_SIZE);
 +				FcPatternDel(pattern, FC_SIZE);
 +				FcPatternAddDouble(pattern, FC_PIXEL_SIZE, fontval);
 +			}
 +		}
-+
++	
 +		FcPatternAddBool(pattern, FC_SCALABLE, 1);
-+
++	
 +		FcConfigSubstitute(NULL, pattern, FcMatchPattern);
 +		XftDefaultSubstitute(xw.dpy, xw.scr, pattern);
-+
++	
 +		if (xloadsparefont(pattern, FRC_NORMAL))
 +			die("can't open spare font %s\n", *fp);
-+
++	
 +		FcPatternDel(pattern, FC_SLANT);
 +		FcPatternAddInteger(pattern, FC_SLANT, FC_SLANT_ITALIC);
 +		if (xloadsparefont(pattern, FRC_ITALIC))
 +			die("can't open spare font %s\n", *fp);
-+
++			
 +		FcPatternDel(pattern, FC_WEIGHT);
 +		FcPatternAddInteger(pattern, FC_WEIGHT, FC_WEIGHT_BOLD);
 +		if (xloadsparefont(pattern, FRC_ITALICBOLD))
 +			die("can't open spare font %s\n", *fp);
-+
++	
 +		FcPatternDel(pattern, FC_SLANT);
 +		FcPatternAddInteger(pattern, FC_SLANT, FC_SLANT_ROMAN);
 +		if (xloadsparefont(pattern, FRC_BOLD))
 +			die("can't open spare font %s\n", *fp);
-+
++	
 +		FcPatternDestroy(pattern);
 +	}
 +}
@@ -148,7 +148,7 @@ index a48da89..005733e 100644
  void
  xunloadfont(Font *f)
  {
-@@ -1144,6 +1242,9 @@ xinit(int w, int h)
+@@ -1117,6 +1215,9 @@ xinit(int cols, int rows)
  	usedfont = (opt_font == NULL)? font : opt_font;
  	xloadfonts(usedfont, 0);
  
