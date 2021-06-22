@@ -2214,7 +2214,7 @@ void
 usage(void)
 {
 	die("usage: %s [-aiv] [-c class] [-f font] [-g geometry]"
-	    " [-G real_geometry]\n"
+	    " [-G anygeometry]\n"
 	    "          [-n name] [-o file] [-T title] [-t title] [-w windowid]\n"
 	    "          [[-e] command [args ...]] [-l line]"
 	    " [stty_args ...]\n", argv0, argv0);

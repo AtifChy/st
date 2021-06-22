@@ -10,6 +10,8 @@ st \- simple terminal
 .IR font ]
 .RB [ \-g
 .IR geometry ]
+.RB [ \-G
+.IR anygeometry]
 .RB [ \-n
 .IR name ]
 .RB [ \-o
@@ -25,28 +27,10 @@ st \- simple terminal
 .RB [[ \-e ]
 .IR command
 .RI [ arguments ...]]
-.PP
-.B st
-.RB [ \-aiv ]
-.RB [ \-c
-.IR class ]
-.RB [ \-f
-.IR font ]
-.RB [ \-g
-.IR geometry ]
-.RB [ \-n
-.IR name ]
-.RB [ \-o
-.IR iofile ]
-.RB [ \-T
-.IR title ]
-.RB [ \-t
-.IR title ]
-.RB [ \-w
-.IR windowid ]
 .RB \-l
 .IR line
 .RI [ stty_args ...]
+.PP
 .SH DESCRIPTION
 .B st
 is a simple terminal emulator.
@@ -68,6 +52,9 @@ defines the X11 geometry string.
 The form is [=][<cols>{xX}<rows>][{+-}<xoffset>{+-}<yoffset>]. See
 .BR XParseGeometry (3)
 for further details.
+.TP
+.BI \-G " anygeometry"
+allows you to set st's width and height as pixels instead of cells, both from the command line (with the new parameter -G) or the config file (variables geometry, width and height).
 .TP
 .B \-i
 will fixate the position given with the -g option.
@@ -159,6 +146,9 @@ Copy the selected text to the clipboard selection.
 .TP
 .B Ctrl-Shift-v
 Paste from the clipboard selection.
+.TP
+.B Ctrl-Shift-Enter
+Open a new terminal window in same directory
 .SH CUSTOMIZATION
 .B st
 can be customized by creating a custom config.h and (re)compiling the source
