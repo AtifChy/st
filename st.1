@@ -54,7 +54,7 @@ The form is [=][<cols>{xX}<rows>][{+-}<xoffset>{+-}<yoffset>]. See
 for further details.
 .TP
 .BI \-G " anygeometry"
-allows you to set st's width and height as pixels instead of cells, both from the command line (with the new parameter -G) or the config file (variables geometry, width and height).
+allows you to set st's width and height as pixels instead of cells from the command line.
 .TP
 .B \-i
 will fixate the position given with the -g option.
@@ -149,6 +149,12 @@ Paste from the clipboard selection.
 .TP
 .B Ctrl-Shift-Enter
 Open a new terminal window in same directory
+.TP
+.B Alt-l
+Select and copy the last URL. Multiple invocations cycle through the available URLs.
+.TP
+.B Alt-o
+Open contents of the clipboard in a user-defined browser.
 .SH CUSTOMIZATION
 .B st
 can be customized by creating a custom config.h and (re)compiling the source
