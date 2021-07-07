@@ -1,0 +1,57 @@
+#include "colorschemes/onedark"
+
+#define myFont JetBrainsMono Nerd Font
+
+!-- Xft settings --!
+Xft.antialias:      1
+Xft.hinting:        1
+Xft.autohint:       0
+Xft.hintstyle:      hintslight
+Xft.rgba:           rgb
+Xft.lcdfilter:      lcddefault
+
+! st settings
+st.font:            myFont:size=10:weight=90
+st.fontalt0:        Noto Color Emoji:pixelsize=13
+st.borderpx:        10
+st.opacity:         255
+st.alpha:           1.0
+st.cursorshape:     1
+st.blinktimeout:    900
+
+! special
+*.background:       basebg
+*.foreground:       basefg
+*.cursorColor:      basefg
+
+! black
+*.color0:           base00
+*.color8:           base08
+
+! red
+*.color1:           base01
+*.color9:           base09
+
+! green
+*.color2:           base02
+*.color10:          base10
+
+! yellow
+*.color3:           base03
+*.color11:          base11
+
+! blue
+*.color4:           base04
+*.color12:          base12
+
+! magenta
+*.color5:           base05
+*.color13:          base13
+
+! cyan
+*.color6:           base06
+*.color14:          base14
+
+! white
+*.color7:           base07
+*.color15:          base15
