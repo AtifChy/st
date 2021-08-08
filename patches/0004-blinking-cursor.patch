@@ -1,7 +1,7 @@
 From 6cba3544863f45b1f676dbf9b41ccdc6cb5e88d9 Mon Sep 17 00:00:00 2001
 From: AtifChy <iftakhar.awal@yahoo.com>
 Date: Mon, 21 Jun 2021 18:59:54 +0600
-Subject: [PATCH 04/16] blinking-cursor
+Subject: [PATCH 04/17] blinking-cursor
 
 ---
  config.def.h | 19 +++++++++++++------

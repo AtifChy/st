@@ -1,7 +1,7 @@
 From 18f1851f07b7684f66aa0af90c4e43b89269fe95 Mon Sep 17 00:00:00 2001
 From: AtifChy <iftakhar.awal@yahoo.com>
 Date: Mon, 21 Jun 2021 18:58:35 +0600
-Subject: [PATCH 02/16] ligatures
+Subject: [PATCH 02/17] ligatures
 
 ---
  Makefile  |   5 +-

@@ -1,7 +1,7 @@
 From ebd31eea38e28217dbf528fa9fff854765651ea1 Mon Sep 17 00:00:00 2001
 From: AtifChy <iftakhar.awal@yahoo.com>
 Date: Mon, 21 Jun 2021 19:00:45 +0600
-Subject: [PATCH 07/16] xresource
+Subject: [PATCH 07/17] xresource
 
 ---
  config.def.h | 47 ++++++++++++++++++++++++++++---

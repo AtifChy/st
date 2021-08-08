@@ -1,7 +1,7 @@
 From b72d71534ea89e2243ca7bf535254359952cc0e6 Mon Sep 17 00:00:00 2001
 From: AtifChy <iftakhar.awal@yahoo.com>
 Date: Mon, 21 Jun 2021 19:00:24 +0600
-Subject: [PATCH 06/16] bold-isnt-bright
+Subject: [PATCH 06/17] bold-isnt-bright
 
 ---
  x.c | 4 ----

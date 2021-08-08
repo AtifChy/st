@@ -1,7 +1,7 @@
 From 9b3646117718590a6812cd99ee8a4b7c8aa3f78b Mon Sep 17 00:00:00 2001
 From: AtifChy <iftakhar.awal@yahoo.com>
 Date: Mon, 21 Jun 2021 19:00:12 +0600
-Subject: [PATCH 05/16] dynamic-cursor
+Subject: [PATCH 05/17] dynamic-cursor
 
 ---
  x.c | 19 +++++++++++++++++--

@@ -1,7 +1,7 @@
 From 0e41cf96f9e30308b283807fbc6beed79224babc Mon Sep 17 00:00:00 2001
 From: AtifChy <iftakhar.awal@yahoo.com>
 Date: Mon, 21 Jun 2021 19:03:01 +0600
-Subject: [PATCH 13/16] font2
+Subject: [PATCH 13/17] font2
 
 ---
  config.def.h |   6 +++
