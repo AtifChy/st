@@ -1,7 +1,7 @@
 From e50ace865aa1b49e253958776ce8d781b3c5dd0d Mon Sep 17 00:00:00 2001
 From: AtifChy <iftakhar.awal@yahoo.com>
 Date: Tue, 22 Jun 2021 01:15:57 +0600
-Subject: [PATCH 16/16] newterm
+Subject: [PATCH 16/17] newterm
 
 ---
  config.def.h |  1 +

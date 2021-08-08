@@ -1,7 +1,7 @@
 From fb8f38e29a1892333830e0859fa58018404d6bdc Mon Sep 17 00:00:00 2001
 From: AtifChy <iftakhar.awal@yahoo.com>
 Date: Mon, 21 Jun 2021 19:01:28 +0600
-Subject: [PATCH 10/16] fix-wide-glyphs
+Subject: [PATCH 10/17] fix-wide-glyphs
 
 ---
  st.h |   6 +++

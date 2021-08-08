@@ -1,7 +1,7 @@
 From 02eec7cc651ed6466589b0bc9adc3a6ba6c1802e Mon Sep 17 00:00:00 2001
 From: AtifChy <iftakhar.awal@yahoo.com>
 Date: Mon, 21 Jun 2021 19:03:28 +0600
-Subject: [PATCH 14/16] clipboard
+Subject: [PATCH 14/17] clipboard
 
 ---
  config.def.h | 6 +++---

@@ -1,7 +1,7 @@
 From 79caebd3108c1c32ac9ff7fd8ec462a3f1765189 Mon Sep 17 00:00:00 2001
 From: AtifChy <iftakhar.awal@yahoo.com>
 Date: Mon, 21 Jun 2021 18:59:13 +0600
-Subject: [PATCH 03/16] scrollback
+Subject: [PATCH 03/17] scrollback
 
 ---
  config.def.h |   9 ++++

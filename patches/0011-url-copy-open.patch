@@ -1,7 +1,7 @@
 From e85333eedd97ecca375de74ee50123f4be72e183 Mon Sep 17 00:00:00 2001
 From: AtifChy <iftakhar.awal@yahoo.com>
 Date: Mon, 21 Jun 2021 19:02:32 +0600
-Subject: [PATCH 11/16] url-copy-open
+Subject: [PATCH 11/17] url-copy-open
 
 ---
  config.def.h |   2 +
