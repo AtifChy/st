@@ -1,17 +1,17 @@
-From 9b3646117718590a6812cd99ee8a4b7c8aa3f78b Mon Sep 17 00:00:00 2001
+From 1d9c97edb2d77913c263fcbd23b6efc50ada454c Mon Sep 17 00:00:00 2001
 From: AtifChy <iftakhar.awal@yahoo.com>
-Date: Mon, 21 Jun 2021 19:00:12 +0600
-Subject: [PATCH 05/17] dynamic-cursor
+Date: Sun, 8 Aug 2021 20:44:22 +0600
+Subject: [PATCH 05/17] dynamic-cursor-v2
 
 ---
- x.c | 19 +++++++++++++++++--
- 1 file changed, 17 insertions(+), 2 deletions(-)
+ x.c | 24 +++++++++++++++++++++---
+ 1 file changed, 21 insertions(+), 3 deletions(-)
 
 diff --git a/x.c b/x.c
-index c7b7417..093d44f 100644
+index d24a66c..9887a97 100644
 --- a/x.c
 +++ b/x.c
-@@ -1509,6 +1509,7 @@ void
+@@ -1631,6 +1631,7 @@ void
  xdrawcursor(int cx, int cy, Glyph g, int ox, int oy, Glyph og, Line line, int len)
  {
  	Color drawcol;
@@ -19,16 +19,19 @@ index c7b7417..093d44f 100644
  
  	/* remove the old cursor */
  	if (selected(ox, oy))
-@@ -1541,10 +1542,24 @@ xdrawcursor(int cx, int cy, Glyph g, int ox, int oy, Glyph og, Line line, int le
+@@ -1663,10 +1664,27 @@ xdrawcursor(int cx, int cy, Glyph g, int ox, int oy, Glyph og, Line line, int le
  			g.fg = defaultfg;
  			g.bg = defaultrcs;
  		} else {
-+			/** this is the main part of the dynamic cursor color patch */
-+			g.bg = g.fg;
- 			g.fg = defaultbg;
+-			g.fg = defaultbg;
 -			g.bg = defaultcs;
- 		}
--		drawcol = dc.col[g.bg];
++			/** this is the main part of the dynamic cursor color patch */
++			if (!(og.mode & ATTR_REVERSE)) {
++				unsigned long col = g.bg;
++				g.bg = g.fg;
++				g.fg = col;
++			}
++		}
 +
 +		/**
 +		 * and this is the second part of the dynamic cursor color patch.
@@ -42,7 +45,8 @@ index c7b7417..093d44f 100644
 +			XftColorAllocValue(xw.dpy, xw.vis, xw.cmap, &colbg, &drawcol);
 +		} else {
 +			drawcol = dc.col[g.bg];
-+		}
+ 		}
+-		drawcol = dc.col[g.bg];
  	}
  
  	/* draw the new one */
