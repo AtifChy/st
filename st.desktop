@@ -1,6 +1,6 @@
 [Desktop Entry]
 Name=St
-Comment=st is a simple terminal implementation for X
+Comment=St is a simple terminal implementation for X
 Exec=st
 Icon=utilities-terminal
 Terminal=false
